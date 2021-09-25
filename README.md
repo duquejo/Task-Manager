@@ -15,7 +15,7 @@
   - JsonWebToken (8.5.1): Manages user sessions (Login).
   - Bcrypt (2.4.3): Encrypt passwords securely.
   - Multer (1.4.3): Manages file uploading.
-  - [Task Manager App Git](https://github.com/duquejo01/Task-Manager-App): GIT Source.
+  - [Task Manager App Git](https://github.com/duquejo01/Task-Manager): GIT Source.
   - [Task Manager App Demo](#): Live Task Manager App Public Demo.
 
 ## Bootcamp Index
