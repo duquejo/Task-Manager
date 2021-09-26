@@ -41,7 +41,7 @@ router.post( '/users', async ( request, response ) => {
     /**
      * Sending Welcome Automation
      */
-    // sendWelcomeEmail( user.email, user.name );
+    sendWelcomeEmail( user.email, user.name );
 
     /**
      * Generating JWT session tokens
@@ -238,7 +238,7 @@ router.patch( '/users/me', auth, async ( request, response ) => {
  * Delete user by ObjectId
  * @see Added Auth Middleware
  */
- router.delete( '/users/me', auth, async ( request, response ) => {
+router.delete( '/users/me', auth, async ( request, response ) => {
   try {
     
 
