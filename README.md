@@ -23,7 +23,7 @@
     - Nodemon (2.0.12): Listens any JS (or whatever) file changes.
     - Supertest: (6.1.6): Improves Jest with asyncronous tasks and HTTP Request testing support.
   - [Task Manager App Git](https://github.com/duquejo01/Task-Manager): GIT Source.
-  - [Task Manager App Demo](#): Live Task Manager App Public Demo.
+  - [Task Manager App Demo](https://duque-task-manager.herokuapp.com/): Live Task Manager App Public Demo.
 
 ## Bootcamp Index
 
