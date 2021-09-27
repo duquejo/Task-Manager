@@ -66,6 +66,7 @@ router.get( '/tasks', auth, async ( request, response ) => {
   }
 
   if( request.query.sortBy ){
+
     // sort: {
     //   // createdAt: '1' // 1 Ascending / -1 Descending
     //   completed: 1
@@ -73,38 +74,34 @@ router.get( '/tasks', auth, async ( request, response ) => {
     const parts    = request.query.sortBy.split(':');
     sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
 
-    options.sort = sort;
+    options.sort = sort; // Append to sort
   }
 
-  if( request.query.limit ) options.limit = parseInt( request.query.limit );
+  if( request.query.limit ) options.limit = parseInt( request.query.limit ); // Append to limit
 
-  if( request.query.skip ) options.skip = parseInt( request.query.skip );
-
-
-
-  // Task.find({}).then( tasks => response.send( tasks ) )
-  //              .catch( e => response.status(500).send() );
-
+  if( request.query.skip ) options.skip = parseInt( request.query.skip ); // Append to skip
+  
   try {
-    // Alternative #1 (Using Refs)
-    // const tasks = await Task.find( { owner: request.user._id } );
-    // response.send( tasks );
-
-    // Alternative #2 (Using Mongoose Populate)
-    // With Filtering functionality
 
     await request.user.populate({
       path: 'tasks',
       match,
       options
-      // options: {
-        // limit: request.query.limit ? parseInt( request.query.limit ) : {},
-        // skip: request.query.skip ? parseInt( request.query.skip ) : {},
-        // sort
-      // }
     });
     response.send( request.user.tasks );
 
+    // Old way
+
+    // Task.find({}).then( tasks => response.send( tasks ) )
+    //              .catch( e => response.status(500).send() );
+
+    // Alternative #1 (Using Refs)
+
+    // const tasks = await Task.find( { owner: request.user._id } );
+    // response.send( tasks );
+
+    // Alternative #2 (Using Mongoose Populate)
+    // With Filtering functionality
   } catch (e) {
     response.status(500).send();
   }
