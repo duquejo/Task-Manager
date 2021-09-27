@@ -83,12 +83,13 @@ router.get( '/tasks', auth, async ( request, response ) => {
 
     // Alternative #2 (Using Mongoose Populate)
     // With Filtering functionality
+
     await request.user.populate({
       path: 'tasks',
       match,
       options: {
-        limit: parseInt( request.query.limit ),
-        skip: parseInt( request.query.skip ),
+        limit: request.query.limit ? parseInt( request.query.limit ) : {},
+        skip: request.query.skip ? parseInt( request.query.skip ) : {},
         sort
       }
     });
