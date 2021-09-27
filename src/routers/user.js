@@ -39,9 +39,13 @@ router.post( '/users', async ( request, response ) => {
     await user.save();
 
     /**
+     * 
      * Sending Welcome Automation
+     * @requires EMAIL_SVC_ACTIVE constant true
+     * 
      */
-    sendWelcomeEmail( user.email, user.name );
+    console.log( process.env.EMAIL_SVC_ACTIVE );
+    if( process.env.EMAIL_SVC_ACTIVE ) sendWelcomeEmail( user.email, user.name );
 
     /**
      * Generating JWT session tokens
@@ -246,8 +250,9 @@ router.delete( '/users/me', auth, async ( request, response ) => {
     
     /**
      * Sending Welcome Automation
+     * @requires EMAIL_SVC_ACTIVE constant true
      */
-    sendCancelationEmail( request.user.email, request.user.name );
+    if( process.env.EMAIL_SVC_ACTIVE ) sendCancelationEmail( request.user.email, request.user.name );
 
     response.send( request.user );
 

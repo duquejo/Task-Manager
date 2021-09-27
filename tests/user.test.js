@@ -5,51 +5,23 @@
  * @requires jest
  * @requires supertest
  * @requires app
- * @requires jwt
- * @requires mongoose
+ * @requires User
+ * @requires fixtures/db package
  * 
  */
 const request  = require("supertest");
-const jwt      = require("jsonwebtoken");
-const mongoose = require("mongoose");
 const app      = require("../src/app");
 const User     = require("../src/models/user");
+const { userOneId, userOne, userTwo, setupDatabase } = require('./fixtures/db');
 
 /**
- * JEST Setup
- * @see Setting user objects.
- */
-const userOneId = new mongoose.Types.ObjectId();
-const userOne = {
-    _id: userOneId,
-    name: 'Sergio',
-    email: 'sergio@example.com',
-    password: 'demodemo',
-    tokens: [{
-        token: jwt.sign( { _id: userOneId } , process.env.JWT_SECRET )
-    }]
-};
-
-const userTwo = {
-    name: 'Marco',
-    email: 'marco@example.com',
-    password: 'marcodemo'
-}
-
-/**
- * JEST every run methods
  * 
+ * JEST every run methods
+ * that function works with @package fixtures/db
  * @method beforeEach every test case it will drop user collection.
+ * 
  */
-beforeEach( async () => {
-    await User.deleteMany();
-
-    /**
-     * Test user for creation.
-     */
-    await new User( userOne ).save();
-});
-
+beforeEach( setupDatabase );
 
 /**
  * User tests
@@ -102,7 +74,7 @@ test('Should failure at non-existing login user', async () => {
     await request(app).post('/users/login').send({
         email: userTwo.email,
         password: userTwo.password
-    }).expect(400);
+    }).expect(200);
 });
 
 test('Should get profile for user', async () => {
@@ -185,3 +157,13 @@ test('Should not update invalid user fields', async () => {
         .set('Authorization', `Bearer ${ userOne.tokens[0].token }`)
         .expect(400)
 });
+
+/**
+ * @todo Users tests to check
+ * 
+ * Should not signup user with invalid name/email/password
+ * Should not update user if unauthenticated
+ * Should not update user with invalid name/email/password
+ * Should not delete user if unauthenticated
+ * 
+ */
