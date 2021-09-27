@@ -59,6 +59,7 @@ router.get( '/tasks', auth, async ( request, response ) => {
    */
   const match = {};
   const sort  = {};
+  let options = {};
 
   if ( request.query.completed ) {
     match.completed = request.query.completed === 'true'; // Passing as String
@@ -71,7 +72,13 @@ router.get( '/tasks', auth, async ( request, response ) => {
     // }
     const parts    = request.query.sortBy.split(':');
     sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
+
+    options.sort = sort;
   }
+
+  if( request.query.limit ) options.limit = parseInt( request.query.limit );
+
+  if( request.query.skip ) options.skip = parseInt( request.query.skip );
 
 
 
@@ -89,16 +96,17 @@ router.get( '/tasks', auth, async ( request, response ) => {
     await request.user.populate({
       path: 'tasks',
       match,
-      options: {
+      options
+      // options: {
         // limit: request.query.limit ? parseInt( request.query.limit ) : {},
         // skip: request.query.skip ? parseInt( request.query.skip ) : {},
-        sort
-      }
+        // sort
+      // }
     });
     response.send( request.user.tasks );
 
   } catch (e) {
-    response.status(500).send(e);
+    response.status(500).send();
   }
 });
 
