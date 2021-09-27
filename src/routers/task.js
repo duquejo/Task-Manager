@@ -73,6 +73,8 @@ router.get( '/tasks', auth, async ( request, response ) => {
     sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
   }
 
+
+
   // Task.find({}).then( tasks => response.send( tasks ) )
   //              .catch( e => response.status(500).send() );
 
@@ -88,8 +90,8 @@ router.get( '/tasks', auth, async ( request, response ) => {
       path: 'tasks',
       match,
       options: {
-        limit: request.query.limit ? parseInt( request.query.limit ) : {},
-        skip: request.query.skip ? parseInt( request.query.skip ) : {},
+        // limit: request.query.limit ? parseInt( request.query.limit ) : {},
+        // skip: request.query.skip ? parseInt( request.query.skip ) : {},
         sort
       }
     });
