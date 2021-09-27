@@ -45,3 +45,12 @@ npm run dev
   },
   ...
 ```
+
+## Serving Heroku project
+```sh
+heroku config:set key=value
+```
+then: (To check all conf values)
+```sh
+heroku config
+```
